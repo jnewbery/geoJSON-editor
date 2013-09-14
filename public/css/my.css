@@ -1,0 +1,32 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map_canvas {
+  height: 80%;
+}
+
+#map_io {
+  height: 20%;
+}
+
+#geoJSON {
+  height: 100%;
+  width: 80%;
+  float: left;
+}
+
+#loadJsonButton {
+  border: 1px solid #777777;
+  background: #6e9e2d;
+  color: white;
+  font: bold 11px 'Trebuchet MS';
+  padding: 8px;
+  cursor: pointer;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  float: left;
+  margin: 15px;
+}

@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GeoJSON editor</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="public/css/my.css" />
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+    <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script src="public/js/editor.js"></script>
+  </head>
+
+  <body>
+    <div id="map_canvas"></div>
+    <div id="map_io">
+      <textarea id="geoJSON"></textarea>
+      <input id="loadJsonButton" type="button" value="Load GeoJSON" onclick="loadGeoJSON();"></button>
+    </div>
+  </body>
+</html>
