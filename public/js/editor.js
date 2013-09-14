@@ -52,7 +52,9 @@ function addMapOverlay(overlay) {
 }
       
 function dumpGeoJSON(overlays) {
-  var coordinates = new Array();
+  var output,
+      geJSON,
+      coordinates = new Array();
   
   for (var i = 0; i < overlays.length; i++) {
     var polyline = new Array();
@@ -63,17 +65,18 @@ function dumpGeoJSON(overlays) {
       polyline.push(lngLat);
     }
 
-    coordinates.push(new Array(polyline));
+  coordinates.push(polyline);
   }
 
-  var output = document.getElementById('geoJSON');
-  var geoJSON = { 'type': 'MultiPolygon', 'coordinates' : coordinates };
+  output = document.getElementById('geoJSON');
+  geoJSON = { 'type': 'MultiLineString', 'coordinates' : coordinates };
   output.value = JSON.stringify(geoJSON, null, '\t');
 }
 
 function loadGeoJSON() {
-  var textarea = document.getElementById('geoJSON');
-  var geoJSON;
+  var geoJSON,
+      overlay,
+      textarea = document.getElementById('geoJSON');
 
   try {
     geoJSON = JSON.parse(textarea.value);
@@ -83,8 +86,8 @@ function loadGeoJSON() {
     return;
   }
 
-  if (geoJSON.type != 'MultiPolygon') {
-    alert('Your json does not appear to be a MultiPolygon type!');
+  if (geoJSON.type != 'MultiLineString') {
+    alert('Your json does not appear to be a MultiLineString type!');
     return;
   }
   
@@ -98,17 +101,27 @@ function loadGeoJSON() {
     allOverlays[i].setMap(null);
   }
   allOverlays.length = 0;
-    
+  
   for (i in geoJSON.coordinates) {
-    var polyCoords = new Array();
-    for (j in geoJSON.coordinates[i][0]) {
-      var coords = geoJSON.coordinates[i][0][j];
-      polyCoords.push(new google.maps.LatLng(coords[1], coords[0])); 
+    var lineCoords = new Array();
+    for (j in geoJSON.coordinates[i]) {
+      var coords = geoJSON.coordinates[i][j];
+      lineCoords.push(new google.maps.LatLng(coords[1], coords[0])); 
     }
 
-    var overlay = new google.maps.Polygon({ paths: polyCoords, editable: true });
+    overlay = new google.maps.Polyline({ path: lineCoords, editable: true });
     addMapOverlay(overlay);
-    }
   }
+}
+
+function clearGeoJSON() {
+  // Remove all existing overlays
+  for (i in allOverlays) {
+    allOverlays[i].setMap(null);
+  }
+  allOverlays.length = 0;
+
+  document.getElementById('geoJSON').value ='';
+}
 
 google.maps.event.addDomListener(window, 'load', initialize);

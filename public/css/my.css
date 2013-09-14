@@ -18,7 +18,7 @@ html, body {
   float: left;
 }
 
-#loadJsonButton {
+.control {
   border: 1px solid #777777;
   background: #6e9e2d;
   color: white;
